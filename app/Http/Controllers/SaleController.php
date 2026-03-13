@@ -70,6 +70,18 @@ class SaleController extends Controller
                     'note'       => 'Sale #' . $sale->id,
                 ]);
             }
+
+                    // Update customer balance if underpaid
+        if ($request->customer_id) {
+            $customer = \App\Models\Customer::find($request->customer_id);
+            $balance = $request->total - $request->amount_paid;
+            if ($balance > 0) {
+                $customer->increment('balance', $balance);
+            } elseif ($balance < 0) {
+                // Customer overpaid - reduce their balance
+                $customer->decrement('balance', abs($balance));
+            }
+        }
         });
 
         return response()->json(
