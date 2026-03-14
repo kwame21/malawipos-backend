@@ -17,6 +17,10 @@ Route::post('/login', [AuthController::class, 'login']);
 // Protected routes (login required)
 Route::middleware('auth:sanctum')->group(function () {
 
+    Route::get('/users', [App\Http\Controllers\UserController::class, 'index']);
+    Route::post('/users', [App\Http\Controllers\UserController::class, 'store']);
+    Route::delete('/users/{user}', [App\Http\Controllers\UserController::class, 'destroy']);
+
     // Auth
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);

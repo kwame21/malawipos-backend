@@ -7,12 +7,12 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function index()
-    {
-        return response()->json(
-            Category::withCount('products')->orderBy('name')->get()
-        );
-    }
+        public function index()
+        {
+            return response()->json(
+                Category::withCount('products')->get()
+            );
+        }
 
     public function store(Request $request)
     {
